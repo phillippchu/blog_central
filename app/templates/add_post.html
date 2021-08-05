@@ -1,0 +1,6 @@
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+title %}Blog Central - Add Post{% endblock %} {% block app_content %}
+<h1>{{ current_user.username }}, Add A Post!</h1>
+{% if form %} {{ wtf.quick_form(form) }}
+<br />
+{% endif %} {% endblock %}

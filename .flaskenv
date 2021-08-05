@@ -1,0 +1,2 @@
+FLASK_APP=blog_central.py
+FLASK_ENV=production

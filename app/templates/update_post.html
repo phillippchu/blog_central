@@ -1,0 +1,6 @@
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+title %}Blog Central - Update Post{% endblock %} {% block app_content %}
+<legend class="border-bottom mb-4">{{ legend }}</legend>
+{% if form %} {{ wtf.quick_form(form) }}
+<br />
+{% endif %} {% endblock %}
