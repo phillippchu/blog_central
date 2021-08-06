@@ -19,7 +19,7 @@ class Config(object):
     MAIL_USE_SSL = os.getenv("MAIL_USE_SSL")
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
-    ADMINS = ["youremail@example.com"]
+    ADMINS = os.getenv("MAIL_USERNAME")
     POSTS_PER_PAGE = 3
 
 
