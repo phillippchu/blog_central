@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from app import db
 from app.main import main
 from app.main.forms import EditProfileForm, EmptyForm, PostForm, UpdatePostForm
-from app.models import User, Post
+from app.models import User, Post, Comment
 
 
 @main.before_request
@@ -174,6 +174,42 @@ def delete_post(post_id):
     db.session.commit()
     flash("Your post has been deleted!", "success")
     return redirect(url_for("main.user", username=current_user.username))
+
+
+@main.route("/create-comment/<post_id>", methods=['POST'])
+@login_required
+def create_comment(post_id):
+    body = request.form.get('body')
+
+    if not body:
+        flash('Comment cannot be empty.', category='error')
+    else:
+        post = Post.query.filter_by(id=post_id)
+        if post:
+            comment = Comment(
+                body=body, user_id=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+        else:
+            flash('Post does not exist.', category='error')
+
+    return redirect(url_for('main.index'))
+
+
+@main.route("/delete-comment/<comment_id>")
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+
+    if not comment:
+        flash('Comment does not exist.', category='error')
+    elif current_user.id != comment.user_id and current_user.id != comment.post.user_id:
+        flash('You do not have permission to delete this comment.', category='error')
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+
+    return redirect(url_for('main.index'))
 
 
 @main.route("/like/<int:post_id>/<action>")
