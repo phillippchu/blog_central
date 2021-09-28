@@ -30,8 +30,12 @@ class UserModelCase(unittest.TestCase):
 
     def test_avatar(self):
         u = User(username="example", email="example@example.com")
-        self.assertEqual(u.avatar(
-            128), ("https://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?d=robohash&s=128"))
+        self.assertEqual(
+            u.avatar(128),
+            (
+                "https://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?d=robohash&s=128"
+            ),
+        )
 
     def test_follow(self):
         u1 = User(username="u1", email="u1@example.com")
@@ -66,14 +70,10 @@ class UserModelCase(unittest.TestCase):
 
         # create four posts
         now = datetime.utcnow()
-        p1 = Post(body="Post from u1", author=u1,
-                  timestamp=now + timedelta(seconds=1))
-        p2 = Post(body="Post from u2", author=u2,
-                  timestamp=now + timedelta(seconds=4))
-        p3 = Post(body="Post from u3", author=u3,
-                  timestamp=now + timedelta(seconds=3))
-        p4 = Post(body="Post from u4", author=u4,
-                  timestamp=now + timedelta(seconds=2))
+        p1 = Post(body="Post from u1", author=u1, timestamp=now + timedelta(seconds=1))
+        p2 = Post(body="Post from u2", author=u2, timestamp=now + timedelta(seconds=4))
+        p3 = Post(body="Post from u3", author=u3, timestamp=now + timedelta(seconds=3))
+        p4 = Post(body="Post from u4", author=u4, timestamp=now + timedelta(seconds=2))
         db.session.add_all([p1, p2, p3, p4])
         db.session.commit()
 
